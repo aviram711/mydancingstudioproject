@@ -13,8 +13,13 @@ const routes: Routes = [
     loadChildren: () => import('./customer-managment/customer-managment.module').then( m => m.CustomerManagmentPageModule)
   },
   {
+<<<<<<< Updated upstream
     path: 'course-managment',
     loadChildren: () => import('./course-managment/course-managment.module').then( m => m.CourseManagmentPageModule)
+=======
+    path: 'tournament',
+    loadChildren: () => import('./tournament/tournament.module').then( m => m.TournamentPageModule)
+>>>>>>> Stashed changes
   }
 
 ];
