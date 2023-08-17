@@ -22,8 +22,13 @@
  
  
   <div class="container">
-    <ion-datetime presentation="date"></ion-datetime>
+    <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [events]="events">
+    </mwl-calendar-month-view>
   </div>
+  
+  
   <br> <br>  <br> 
 
   <div class="flex-center">

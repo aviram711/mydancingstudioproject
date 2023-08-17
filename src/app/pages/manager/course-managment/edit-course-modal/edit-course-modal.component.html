@@ -1,0 +1,49 @@
+
+<ion-header>
+  <ion-toolbar dir="rtl">
+    <ion-title slot="start">עריכת קורס</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content dir="rtl">
+  <ion-list>
+
+    <ion-item>
+      <ion-label position="stacked">סוג קורס</ion-label>
+      <ion-input [(ngModel)]="course.courseType"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">מורה</ion-label>
+      <ion-input [(ngModel)]="course.teachers"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>ימי הקורס</ion-label>
+    </ion-item>
+    
+    <ion-item *ngFor="let day of days">
+      <ion-checkbox slot="end" [(ngModel)]="day.selected"></ion-checkbox>
+      <ion-label>{{ day.name }}</ion-label>
+    </ion-item>
+
+    <ion-button slot="start" color="danger" size="full" (click)="resetAllDays()">איפוס כל הימים</ion-button>
+
+
+    <ion-item *ngIf="selectedDays.length > 0">
+      <ion-label position="stacked">שעת התחלה</ion-label>
+      <br> <br>
+      <ion-datetime presentation="time" [(ngModel)]="startTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item *ngIf="selectedDays.length > 0">
+      <ion-label position="stacked">שעת סיום</ion-label>
+      <br> <br>
+      <ion-datetime presentation="time" [(ngModel)]="endTime"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+ <div class="ion-buttons">
+    <ion-button size="full" color="success" (click)="saveChanges()">שמירה</ion-button>
+    <ion-button size="full" (click)="cancel()">ביטול</ion-button>
+  </div>
+</ion-content>

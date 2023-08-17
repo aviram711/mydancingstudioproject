@@ -6,18 +6,18 @@
     <br>
     <ion-card-content *ngIf="!editMode">
       <!-- Display the customer details here -->
-      <p>Parent Names: <span>{{customer.parentNames}}</span></p>
-      <p>Phone Number: <span>0{{customer.phoneNumber}}</span></p>
-      <p>Username: <span>{{customer.username}}</span></p>
-      <p>Password: <span>{{customer.password}}</span></p>
-      <p>Email: <span>{{customer.email}}</span></p>
-      <p>Child Name: <span>{{customer.childName}}</span></p>
-      <p>Birth Date: <span>{{customer.birthdate | date}}</span></p> <!-- Use Angular date pipe to format the date -->
-      <p>Gender: <span>{{customer.gender}}</span></p>
-      <p>Course Type: <span>{{customer.courseType}}</span></p>
-      <p>Child ID: <span>{{customer.childID}}</span></p>
-      <p>Teacher: <span>{{customer.teacher}}</span></p>
-      <p>Course ID: <span>{{customer.courseID}}</span></p>
+      <p dir="rtl" slot="end">שמות ההורים: <span>{{customer.parentNames}}</span></p>
+      <p dir="rtl" slot="end">מספר טלפון: <span>0{{customer.phoneNumber}}</span></p>
+      <p dir="rtl" slot="end">שם משתמש: <span>{{customer.username}}</span></p>
+      <p dir="rtl" slot="end">סיסמא: <span>{{customer.password}}</span></p>
+      <p dir="rtl" slot="end">כתובת מייל : <span>{{customer.email}}</span></p>
+      <p dir="rtl" slot="end">שם הילד: <span>{{customer.childName}}</span></p>
+      <p dir="rtl" slot="end">תאריך לידה: <span>{{customer.birthdate | date}}</span></p> <!-- Use Angular date pipe to format the date -->
+      <p dir="rtl" slot="end">מין:  <span>{{customer.gender}}</span></p>
+      <p dir="rtl" slot="end">סוג הקורס: <span>{{customer.courseType}}</span></p>
+      <p dir="rtl" slot="end">תעודת זהות של הילד: <span>{{customer.childID}}</span></p>
+      <!-- <p dir="rtl" slot="end">הערות: <span>{{customer.teacher}}</span></p> -->
+      <!-- <p>Course ID: <span>{{customer.courseID}}</span></p> -->
     </ion-card-content>
 
     <ion-card-content *ngIf="editMode">
@@ -54,7 +54,8 @@
       </ion-item>
       <br>
       <ion-item>
-        <ion-label position="stacked">Birthdate</ion-label>
+        <ion-label dir="rtl" position="stacked">תאריך לידה</ion-label>
+        <br>
         <ion-datetime [(ngModel)]="customer.birthdate" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"></ion-datetime>
       </ion-item>
       <br>
@@ -79,15 +80,15 @@
         <ion-input [(ngModel)]="customer.childID" type="text" disabled dir="rtl"></ion-input>
       </ion-item>
       
-      <ion-item>
-        <ion-label dir="rtl" slot="end">מורה:</ion-label>
+      <!-- <ion-item>
+        <ion-label dir="rtl" slot="end">הערות:</ion-label>
         <ion-input [(ngModel)]="customer.teacher" type="text" dir="rtl"></ion-input>
-      </ion-item>
+      </ion-item> -->
       
-      <ion-item>
+      <!-- <ion-item>
         <ion-label dir="rtl" slot="end">ת.ז. של הקורס:</ion-label>
         <ion-input [(ngModel)]="customer.courseID" type="text" dir="rtl"></ion-input>
-      </ion-item>
+      </ion-item> -->
       
       <ion-button color="success" size="full" (click)="saveChanges()">שמירה</ion-button>
       <ion-button size="full" color="danger" (click)="confirmDelete()">מחק לקוח</ion-button>

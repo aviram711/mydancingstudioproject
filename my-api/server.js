@@ -14,7 +14,6 @@ app.use(cors());
 
 app.post('/api/register', (req, res) => {
   const formData = req.body;
-
   formData.birthdate = new Date(formData.birthdate);
 
   const sql = 'INSERT INTO register (phoneNumber, parentNames, username, password, cpassword, email, numberOfChildren) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -36,7 +35,20 @@ app.post('/api/register', (req, res) => {
             console.error(error);
             res.status(500).json({ message: 'Error saving children data' }); 
           } else {
-            res.json({ message: 'Form data received and saved successfully!' }); 
+            // Insert the courses after saving children
+            const courses = formData.children.map(child => {
+              return [child.courseType, child.childID];
+            });
+
+            const sql3 = 'INSERT INTO courses (courseType, childID) VALUES ?';
+            connection.query(sql3, [courses], (error) => {
+              if (error) {
+                console.error(error);
+                res.status(500).json({ message: 'Error saving course data' });
+              } else {
+                res.json({ message: 'Form data received and saved successfully!' }); 
+              }
+            });
           }
         });
       } else {
@@ -171,6 +183,93 @@ app.delete('/api/customers/:phoneNumber/:childID', (req, res) => {
     }
   });
 });
+
+
+app.get('/api/courses', (req, res) => {
+  const sql = `
+    SELECT courses.*, course_schedule.dayOfWeek, course_schedule.startTime, course_schedule.endTime
+    FROM courses
+    LEFT JOIN course_schedule ON courses.id = course_schedule.courseID`;
+  connection.query(sql, (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error retrieving course types' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+app.post('/api/courses/saveChanges', (req, res) => {
+  console.log('Data received:', req.body);
+  const { course, schedules } = req.body;
+
+  const updateCourseSql = `
+      UPDATE courses
+      SET courseType = ?, teachers = ?
+      WHERE id = ?`;
+
+  connection.query(updateCourseSql, [course.courseType, course.teachers, course.id], (error) => {
+      if (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Error updating course' });
+      }
+
+      // Delete existing schedules for the course
+      const deleteScheduleSql = 'DELETE FROM course_schedule WHERE courseID = ?';
+      connection.query(deleteScheduleSql, [course.id], (error) => {
+          if (error) {
+              console.error(error);
+              return res.status(500).json({ message: 'Error deleting old schedule' });
+          }
+
+          // Insert new schedules using Promises
+          const insertPromises = schedules.map(schedule => {
+              return new Promise((resolve, reject) => {
+                  const insertScheduleSql = `
+                      INSERT INTO course_schedule (courseID, dayOfWeek, startTime, endTime)
+                      VALUES (?, ?, ?, ?)`;
+                  
+                  connection.query(insertScheduleSql, [course.id, schedule.dayOfWeek, schedule.startTime, schedule.endTime], (error) => {
+                      if (error) {
+                          reject(error);
+                      } else {
+                          resolve();
+                      }
+                  });
+              });
+          });
+
+          Promise.all(insertPromises)
+          .then(() => {
+              res.json({ success: true, message: 'Changes saved successfully' });
+          })
+          .catch(error => {
+              console.error(error);
+              res.status(500).json({ message: 'Error inserting new schedule' });
+          });
+      });
+  });
+});
+
+
+app.delete('/api/courses/deleteDay', (req, res) => {
+  const { courseId, dayOfWeek } = req.body;
+
+  // SQL query to delete the specified day for the given course
+  const deleteDaySql = `
+    DELETE FROM course_schedule 
+    WHERE courseID = ? AND dayOfWeek = ?`;
+
+  connection.query(deleteDaySql, [courseId, dayOfWeek], (error) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error deleting the specified day' });
+    } else {
+      res.json({ success: true, message: 'Day deleted successfully' });
+    }
+  });
+});
+
 
 
 

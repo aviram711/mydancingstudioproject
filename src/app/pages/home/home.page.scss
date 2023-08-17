@@ -1,4 +1,7 @@
 
+@import "../../../../node_modules/angular-calendar/css/angular-calendar.css";
+
+
 .image-container {
     display: flex;
     justify-content: center;
@@ -11,14 +14,15 @@
     --ion-background-color: white;
     
   }
-
   .container {
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
     align-items: center;
-    height: 40vh;
-    
-  }
+}
+
+
+
 
   .whatsapp {
     position: relative;

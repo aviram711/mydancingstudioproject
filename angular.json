@@ -31,7 +31,12 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "styles": [
+              "src/theme/variables.scss",
+              "src/global.scss",
+              "node_modules/angular-calendar/css/angular-calendar.css"
+          ],
+          
             "scripts": []
           },
           "configurations": {

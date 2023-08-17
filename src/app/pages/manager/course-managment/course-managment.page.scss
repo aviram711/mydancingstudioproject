@@ -1,29 +1,30 @@
 /* Add custom styles for the course list */
 .course-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  /* Add styles for the course cards */
-  .course-card {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  /* Styles for the course card title */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
   ion-card-title {
     font-size: 20px;
     font-weight: bold;
     margin: 10px;
     text-align: center;
   }
+
+
+.add-course-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  font-size: 1.2rem;
+
+}
+
+
+
+  
   
 

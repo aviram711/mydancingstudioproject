@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: ManagerPage
-  },  {
+  },
+  {
     path: 'customer-managment',
     loadChildren: () => import('./customer-managment/customer-managment.module').then( m => m.CustomerManagmentPageModule)
   },
